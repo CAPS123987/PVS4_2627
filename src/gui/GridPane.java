@@ -5,19 +5,21 @@ import java.awt.*;
 
 public class GridPane extends JFrame {
     public GridPane(){
-        int dimension = 10; //(4-100)
+        int dimension = 18; //(4-100)
 
         setSize(700, 700);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        setLayout(new GridLayout(1,5));
+        setLayout(new GridLayout(dimension,dimension));
 
-        for (int i = 0; i < 10; i++) {
-            if (i % 2 == 0)
-                add(new Piece(Color.blue));
+        for (int i = 0; i < dimension; i++) {
+            for (int j = 0; j < dimension; j++) {
+            if ((i+j) % 2 == 1)
+                add(new Piece(Color.red));
             else
-                add(new Piece(Color.white));
+                add(new Piece(Color.cyan));
+            }
         }
     }
 
