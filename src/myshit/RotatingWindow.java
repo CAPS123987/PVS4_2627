@@ -4,6 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
 
 public class RotatingWindow extends JFrame {
 
@@ -42,13 +46,8 @@ public class RotatingWindow extends JFrame {
         button.addActionListener(e->{
 //            colors.addFirst(colors.get(colors.size()-1));
 //            colors.removeLast();
+            rotate();
 
-            colors.add(colors.getFirst());
-            colors.removeFirst();
-            for (int i = 0; i < panels.size(); i++) {
-                JPanel panel = panels.get(i);
-                panel.setBackground(colors.get(i));
-            }
         });
 
 
@@ -56,6 +55,23 @@ public class RotatingWindow extends JFrame {
 
         add(inner);
         setVisible(true);
+
+        Timer timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                rotate();
+            }
+        }, 20L, 80L);
+    }
+
+    public void rotate(){
+        colors.add(colors.getFirst());
+        colors.removeFirst();
+        for (int i = 0; i < panels.size(); i++) {
+            JPanel panel = panels.get(i);
+            panel.setBackground(colors.get(i));
+        }
     }
 
     public static void main(String[] args) {
