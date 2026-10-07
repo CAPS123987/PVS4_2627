@@ -13,7 +13,7 @@ import java.util.Comparator;
 import java.util.List;
 
 public class MovieTable extends JFrame {
-    List<Record> data;
+    ArrayList<Record> data;
     DefaultTableModel model;
 
     MovieTable(){
@@ -60,9 +60,7 @@ public class MovieTable extends JFrame {
                     }
                 });
             }
-
-            model.setRowCount(0);
-            fillTable();
+            System.out.println(data);
         });
 //        sortButton.setFocusable(false);
 
@@ -89,14 +87,14 @@ public class MovieTable extends JFrame {
 
     void loadData(String filePath){
         try {
-            data = Files.lines(Path.of(filePath))
+            data = new ArrayList<>(Files.lines(Path.of(filePath))
                     .map(line -> line.split(";"))
                     .map(parts -> new Record(
                             parts[0],
                             Integer.parseInt(parts[1]),
                             Double.parseDouble(parts[2]),
                             Integer.parseInt(parts[3])
-                    )).toList();
+                    )).toList() );
 
         } catch (IOException e) {
             throw new RuntimeException(e);
